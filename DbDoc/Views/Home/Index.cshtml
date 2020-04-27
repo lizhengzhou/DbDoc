@@ -5,7 +5,7 @@
 <script src="@Url.Content("~/lib/jquery/dist/jquery.js")" type="text/javascript"></script>
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
+    <h1 class="display-4">数据库文档管理系统</h1>
     <div class="text-left"><button class="btn btn-primary" onclick="add()">添加</button></div>
     <table class="table table-striped">
         <thead>
@@ -48,27 +48,39 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
             <div class="modal-body">
-                <div class="form-horizontal form-inline">
-                    <input id="ID" type="hidden" />
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"><font color="red">*</font>名称：</label>
-                        <div class="col-md-8">
-                            <input type="text" id="Name" class="form-control" required />
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <label class="col-md-4 control-label"><font color="red">*</font>名称：</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="Name" class="form-control" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <label class="col-md-4 control-label"> 描述：</label>
+                                <div class="col-md-8">
+                                    <input type="text" id="Desc" class="form-control" required />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"> 描述：</label>
-                        <div class="col-md-8">
-                            <input type="text" id="Desc" class="form-control" required />
+                    <div class="row">
+                        <input id="ID" type="hidden" />
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <label class="col-2 control-label"> 链接：</label>
+                                <div class="col-10">
+                                    <input type="text" id="ConnectionString" class="form-control" required />
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"> 链接：</label>
-                        <div class="col-md-8">
-                            <input type="text" id="ConnectionString" class="form-control" required />
-                        </div>
-                    </div>
-                </div>
+                </div>               
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -81,27 +93,23 @@
 
 <script>
     function add() {
-        $('#editModal').modal();
+        $('#editModal').modal('show');
     }
 
 
     function save() {
-        if ($("#Name").val() != '' && $("#ConnectionString").val() != '') {
+        if ($("#Name").val() != '') {
             if ($("#ID").val() != '') {
                 $.post("/Home/Update", { ID: $("#ID").val(), Name: $("#Name").val(), Desc: $("#Desc").val(), ConnectionString: $("#ConnectionString").val() }).done(function () {
                     alert("更新成功！");
-                    $('#editModal').modal({
-                        show: false
-                    });
+                    $('#editModal').modal('hide');
                 }).fail(function () {
                     alert("更新失败，请重试！")
                 })
             } else {
                 $.post("/Home/Add", { Name: $("#Name").val(), Desc: $("#Desc").val(), ConnectionString: $("#ConnectionString").val() }).done(function () {
                     alert("新增成功！");
-                    $('#editModal').modal({
-                        show: false
-                    });
+                    $('#editModal').modal('hide');
                 }).fail(function () {
                     alert("新增失败，请重试！")
                 })
@@ -127,9 +135,9 @@
             $("#ID").val(model.id);
             $("#Name").val(model.name);
             $("#Desc").val(model.desc);
-            $("#ConnectionString").val(model.connectionstring);
+            //$("#ConnectionString").val(model.connectionString);
 
-            $('#editModal').modal();
+            $('#editModal').modal('show');
         });
 
     }

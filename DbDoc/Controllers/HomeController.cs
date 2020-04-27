@@ -65,6 +65,11 @@ namespace DbDoc.Controllers
         {
             model = _context.Dbs.First(x => x.ID == model.ID);
 
+            if (string.IsNullOrEmpty(model.ConnectionString))
+            {
+                throw new ApplicationException("链接字符串不能为空！");
+            }
+
             var dbg = new DbDocGenerator(model.ConnectionString);
 
             model.Html = dbg.ExportToHtml();
@@ -87,7 +92,11 @@ namespace DbDoc.Controllers
 
             exist.Name = model.Name;
             exist.Desc = model.Desc;
-            exist.ConnectionString = model.ConnectionString;
+
+            if (!string.IsNullOrEmpty(model.ConnectionString))
+            {
+                exist.ConnectionString = model.ConnectionString;
+            }
 
             _context.SaveChanges();
 
