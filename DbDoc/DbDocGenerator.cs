@@ -31,7 +31,7 @@ namespace DbDocGen
         //http://stackoverflow.com/questions/1559791/how-do-i-find-assembly-version-of-calling-program
         private readonly string appVersion = Assembly.GetExecutingAssembly().GetName().Version.ToString(3);
 
-        private readonly string projectUrl = "http://jeremykdev.github.io/SqlServerDatabaseDocumentationGenerator/";
+        private readonly string projectUrl = "https://github.com/lizhengzhou/DbDoc";
 
 
         public bool ForeignKeyToTableHyperLink = true;
