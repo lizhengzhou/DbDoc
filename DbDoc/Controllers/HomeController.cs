@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using DbDoc.Models;
 using DbDocGen;
+using System.Text;
 
 namespace DbDoc.Controllers
 {
@@ -83,7 +84,7 @@ namespace DbDoc.Controllers
         {
             var model = _context.Dbs.First(x => x.ID == id);
 
-            return Content(model.Html, new Microsoft.Net.Http.Headers.MediaTypeHeaderValue("text/html"));
+            return Content(model.Html, "text/html", Encoding.UTF8);
         }
 
         public IActionResult Update(Db model)
