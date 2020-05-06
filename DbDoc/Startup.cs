@@ -26,7 +26,7 @@ namespace DbDoc
             string ConnectionString = Configuration.GetValue<string>("ConnectionString");
             if (string.IsNullOrEmpty(ConnectionString)) throw new ApplicationException("数据库连接未配置");
             services.AddDbContext<Context>(optionsBuilder => {
-                optionsBuilder.UseSqlServer(ConnectionString);
+                optionsBuilder.UseSqlite(ConnectionString);
             });
 
             services.AddControllersWithViews();
